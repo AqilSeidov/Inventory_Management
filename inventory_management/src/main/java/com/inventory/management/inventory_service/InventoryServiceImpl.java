@@ -2,7 +2,7 @@ package com.inventory.management.inventory_service;
 
 import com.inventory.management.dao.InventoryDAO;
 import com.inventory.management.entity.StockEntity;
-import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +17,8 @@ public class InventoryServiceImpl implements InventoryService{
         this.inventoryDAO = inventoryDAO;
     }
 
+    @Transactional
+    @Override
     public void save(StockEntity stock){
         inventoryDAO.save(stock);
     }

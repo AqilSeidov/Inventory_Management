@@ -31,8 +31,8 @@ public class StockEntity {
 //-----------------------------------------------------------
 
     // Default Constructor
-    public StockEntity() {}
 
+    public StockEntity() {}
 
     //Constructor
     public StockEntity(int id, String product, int quantity, int price, String category) {
@@ -42,6 +42,7 @@ public class StockEntity {
         this.price = price;
         this.category = category;
     }
+
 
 
     // Getters and  Setter
