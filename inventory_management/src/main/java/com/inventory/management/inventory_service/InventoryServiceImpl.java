@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Service
 public class InventoryServiceImpl implements InventoryService{
     // Let's call entity manager
@@ -27,6 +29,12 @@ public class InventoryServiceImpl implements InventoryService{
     @Override
     public StockEntity getByID(@RequestParam int id) {
         return inventoryDAO.getByID(id);
+
+    }
+
+    @Override
+    public List<StockEntity> getAll() {
+        return inventoryDAO.getAll();
 
     }
 

@@ -2,9 +2,13 @@ package com.inventory.management.dao;
 
 import com.inventory.management.entity.StockEntity;
 
+import java.util.List;
+
 public interface InventoryDAO {
 
     void save(StockEntity stock);
 
     StockEntity getByID(int id);
+
+    List<StockEntity> getAll();
 }

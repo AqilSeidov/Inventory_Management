@@ -6,6 +6,8 @@ import com.inventory.management.inventory_service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {
@@ -21,7 +23,12 @@ public class InventoryController {
         inventoryService.save(stock);
     }
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/get")
+    public List<StockEntity> getAllItems(){
+        return inventoryService.getAll();
+    }
+
+    @GetMapping("/get/{id}")
     public StockEntity getById(@PathVariable int id){
         StockEntity product = inventoryService.getByID(id);
         if (product == null){
