@@ -85,7 +85,23 @@ public class DaoImpl implements InventoryDAO{
         else{
             throw new IllegalArgumentException("Product with ID " + stock.getId() + " does not exist.");
         }
-
     }
+
+    @Override
+    public List<StockEntity> getByProdName(String productName) {
+
+        TypedQuery<StockEntity> theQuery = entityManager.createQuery(
+                "FROM StockEntity s WHERE s.product LIKE :productName", StockEntity.class);
+        theQuery.setParameter("productName", productName);
+
+        List<StockEntity> result = theQuery.getResultList();
+
+        if (result.isEmpty()) {
+            throw new IllegalArgumentException("Product with Name " + productName + " does not exist.");
+        }
+
+        return result;
+    }
+
 
 }

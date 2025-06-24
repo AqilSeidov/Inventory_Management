@@ -17,4 +17,6 @@ public interface InventoryService {
     void delete(StockEntity stock);
 
     void update(StockEntity stock);
+
+    List<StockEntity> getByProdName(String prodName);
 }

@@ -18,4 +18,6 @@ public interface InventoryDAO {
 
     void update(StockEntity stock);
 
+    List<StockEntity> getByProdName(String prodName);
+
 }

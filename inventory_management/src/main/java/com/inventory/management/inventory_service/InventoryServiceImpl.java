@@ -73,4 +73,13 @@ public class InventoryServiceImpl implements InventoryService{
         }
     }
 
+    @Override
+    public List<StockEntity> getByProdName(String productName) {
+        if(inventoryDAO.getByProdName(productName) != null) {
+            return inventoryDAO.getByProdName(productName);
+        }else {
+            throw new IllegalArgumentException("Product with Name " + productName + " does not exist.");
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package com.inventory.management.controller;
 import com.inventory.management.entity.StockEntity;
 import com.inventory.management.inventory_service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,5 +66,16 @@ public class InventoryController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/get/name/{name}")
+    public ResponseEntity<?> findByName(@PathVariable String name){
+        try{
+            List<StockEntity> product = inventoryService.getByProdName(name);
+            return ResponseEntity.ok().body(product);
+
+        }catch(InvalidDataAccessApiUsageException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
