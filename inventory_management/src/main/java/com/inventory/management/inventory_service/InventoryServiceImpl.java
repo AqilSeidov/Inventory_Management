@@ -22,16 +22,17 @@ public class InventoryServiceImpl implements InventoryService{
 
 
     @Override
-    public boolean checkUnique(int id) {
-        return inventoryDAO.checkUnique(id);
+    public boolean checkExist(int id) {
+        return inventoryDAO.checkExist(id);
     }
 
 
     @Transactional
     @Override
     public void save(StockEntity stock) {
-        if (inventoryDAO.checkUnique(stock.getId())) {
+        if (inventoryDAO.checkExist(stock.getId())) {
             inventoryDAO.save(stock);
+
         } else {
             throw new IllegalArgumentException("Product with ID " + stock.getId() + " already exists.");
         }
@@ -40,8 +41,12 @@ public class InventoryServiceImpl implements InventoryService{
 
     @Override
     public StockEntity getByID(@RequestParam int id) {
-        return inventoryDAO.getByID(id);
+        if(inventoryDAO.checkExist(id)) {
+            throw new IllegalArgumentException("Product with ID " + id + " does not exist.");
 
+        } else {
+            return inventoryDAO.getByID(id);
+        }
     }
 
 

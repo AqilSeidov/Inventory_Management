@@ -23,7 +23,7 @@ public class DaoImpl implements InventoryDAO{
     StockEntity stockEntity = new StockEntity();
 
     @Override
-    public boolean checkUnique(int id) {
+    public boolean checkExist(int id) {
         boolean item = entityManager.find(StockEntity.class , id) !=null;
         if(item){
             return false;
@@ -33,7 +33,7 @@ public class DaoImpl implements InventoryDAO{
 
     @Override
     public void save(StockEntity stock){
-        if(checkUnique(stock.getId())){
+        if(checkExist(stock.getId())){
             entityManager.persist(stock);
         }
         else{
@@ -44,13 +44,13 @@ public class DaoImpl implements InventoryDAO{
 
     @Override
     public StockEntity getByID(int id) {
+        if(checkExist(id)){
+            throw new IllegalArgumentException("Product with ID " + id + " does not exist.");
 
-        StockEntity product = entityManager.find(StockEntity.class, id);
-
-        if(product == null){
-            throw new RuntimeException("Stock not found");
+        }else{
+            return entityManager.find(StockEntity.class , id);
         }
-        return product;
+
     }
 
     @Override

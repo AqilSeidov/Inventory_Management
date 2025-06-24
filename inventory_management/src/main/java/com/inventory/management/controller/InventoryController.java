@@ -33,12 +33,16 @@ public class InventoryController {
         return inventoryService.getAll();
     }
 
+
     @GetMapping("/get/{id}")
-    public StockEntity getById(@PathVariable int id){
-        StockEntity product = inventoryService.getByID(id);
-        if (product == null){
-            throw new RuntimeException("Product not found");
+    public ResponseEntity<?> getById(@PathVariable int id){
+
+        try{
+            StockEntity product = inventoryService.getByID(id);
+            return ResponseEntity.ok().body(product);
+
+        }catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return product;
     }
 }

@@ -12,5 +12,5 @@ public interface InventoryService {
 
     List<StockEntity> getAll();
 
-    boolean checkUnique(int id);
+    boolean checkExist(int id);
 }
