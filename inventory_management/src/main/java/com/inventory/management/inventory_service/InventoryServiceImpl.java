@@ -20,17 +20,30 @@ public class InventoryServiceImpl implements InventoryService{
         this.inventoryDAO = inventoryDAO;
     }
 
+
+    @Override
+    public boolean checkUnique(int id) {
+        return inventoryDAO.checkUnique(id);
+    }
+
+
     @Transactional
     @Override
-    public void save(StockEntity stock){
-        inventoryDAO.save(stock);
+    public void save(StockEntity stock) {
+        if (inventoryDAO.checkUnique(stock.getId())) {
+            inventoryDAO.save(stock);
+        } else {
+            throw new IllegalArgumentException("Product with ID " + stock.getId() + " already exists.");
+        }
     }
+
 
     @Override
     public StockEntity getByID(@RequestParam int id) {
         return inventoryDAO.getByID(id);
 
     }
+
 
     @Override
     public List<StockEntity> getAll() {

@@ -20,9 +20,26 @@ public class DaoImpl implements InventoryDAO{
         this.entityManager = entityManager;
     }
 
+    StockEntity stockEntity = new StockEntity();
+
+    @Override
+    public boolean checkUnique(int id) {
+        boolean item = entityManager.find(StockEntity.class , id) !=null;
+        if(item){
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void save(StockEntity stock){
-        entityManager.persist(stock);
+        if(checkUnique(stock.getId())){
+            entityManager.persist(stock);
+        }
+        else{
+            throw new IllegalArgumentException("Product with ID " + stock.getId() + " already exists.");
+        }
+
     }
 
     @Override
@@ -45,5 +62,6 @@ public class DaoImpl implements InventoryDAO{
 
         return all_inventory;
     }
+
 
 }

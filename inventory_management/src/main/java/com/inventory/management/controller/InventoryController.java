@@ -1,9 +1,9 @@
 package com.inventory.management.controller;
 
-import com.inventory.management.dao.InventoryDAO;
 import com.inventory.management.entity.StockEntity;
 import com.inventory.management.inventory_service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +19,13 @@ public class InventoryController {
     }
 
     @PostMapping("/add")
-    public void add(@RequestBody StockEntity stock){
-        inventoryService.save(stock);
+    public ResponseEntity<String> add(@RequestBody StockEntity stock){
+        try{
+            inventoryService.save(stock);
+            return ResponseEntity.ok().build();
+        }catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/get")

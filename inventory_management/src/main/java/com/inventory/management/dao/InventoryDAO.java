@@ -11,4 +11,6 @@ public interface InventoryDAO {
     StockEntity getByID(int id);
 
     List<StockEntity> getAll();
+
+    boolean checkUnique(int id);
 }
