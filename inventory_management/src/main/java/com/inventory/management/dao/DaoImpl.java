@@ -2,7 +2,6 @@ package com.inventory.management.dao;
 
 import com.inventory.management.entity.StockEntity;
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +20,12 @@ public class DaoImpl implements InventoryDAO{
     @Override
     public void save(StockEntity stock){
         entityManager.persist(stock);
+    }
+
+    @Override
+    public StockEntity getByID(int id) {
+        StockEntity product = entityManager.find(StockEntity.class, id);
+        return product;
     }
 
 }

@@ -5,4 +5,6 @@ import com.inventory.management.entity.StockEntity;
 public interface InventoryService {
 
     void save(StockEntity stock);
+
+    StockEntity getByID(int id);
 }
