@@ -24,20 +24,20 @@ public class DaoImpl implements InventoryDAO{
 
     @Override
     public boolean checkExist(int id) {
-        boolean item = entityManager.find(StockEntity.class , id) !=null;
-        if(item){
-            return false;
+        boolean item = entityManager.find(StockEntity.class , id) != null;
+        if(item == true){
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
     public void save(StockEntity stock){
         if(checkExist(stock.getId())){
-            entityManager.persist(stock);
+            throw new IllegalArgumentException("Product with ID " + stock.getId() + " already exists.");
         }
         else{
-            throw new IllegalArgumentException("Product with ID " + stock.getId() + " already exists.");
+            entityManager.persist(stock);
         }
 
     }
@@ -45,10 +45,10 @@ public class DaoImpl implements InventoryDAO{
     @Override
     public StockEntity getByID(int id) {
         if(checkExist(id)){
-            throw new IllegalArgumentException("Product with ID " + id + " does not exist.");
+            return entityManager.find(StockEntity.class , id);
 
         }else{
-            return entityManager.find(StockEntity.class , id);
+            throw new IllegalArgumentException("Product with ID " + id + " does not exist.");
         }
 
     }
@@ -63,5 +63,16 @@ public class DaoImpl implements InventoryDAO{
         return all_inventory;
     }
 
+
+    @Override
+    public void delete(int id) {
+        if(checkExist(id)){
+            entityManager.remove(entityManager.find(StockEntity.class , id));
+
+        }else{
+            throw new IllegalArgumentException("Product with ID " + id + " does not exist.");
+
+        }
+    }
 
 }

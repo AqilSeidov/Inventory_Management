@@ -13,4 +13,6 @@ public interface InventoryDAO {
     List<StockEntity> getAll();
 
     boolean checkExist(int id);
+
+    void delete(int id);
 }

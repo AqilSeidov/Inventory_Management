@@ -31,10 +31,10 @@ public class InventoryServiceImpl implements InventoryService{
     @Override
     public void save(StockEntity stock) {
         if (inventoryDAO.checkExist(stock.getId())) {
-            inventoryDAO.save(stock);
+            throw new IllegalArgumentException("Product with ID " + stock.getId() + " already exists.");
 
         } else {
-            throw new IllegalArgumentException("Product with ID " + stock.getId() + " already exists.");
+            inventoryDAO.save(stock);
         }
     }
 
@@ -42,10 +42,10 @@ public class InventoryServiceImpl implements InventoryService{
     @Override
     public StockEntity getByID(@RequestParam int id) {
         if(inventoryDAO.checkExist(id)) {
-            throw new IllegalArgumentException("Product with ID " + id + " does not exist.");
+            return inventoryDAO.getByID(id);
 
         } else {
-            return inventoryDAO.getByID(id);
+            throw new IllegalArgumentException("Product with ID " + id + " does not exist.");
         }
     }
 
@@ -53,6 +53,17 @@ public class InventoryServiceImpl implements InventoryService{
     @Override
     public List<StockEntity> getAll() {
         return inventoryDAO.getAll();
+
+    }
+
+    @Transactional
+    @Override
+    public void delete(int id) {
+        if(inventoryDAO.checkExist(id)) {
+            inventoryDAO.delete(id);
+        }else{
+            throw new IllegalArgumentException("Product with ID " + id + " does not exist.");
+        }
 
     }
 

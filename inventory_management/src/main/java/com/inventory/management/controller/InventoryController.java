@@ -45,4 +45,14 @@ public class InventoryController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable int id){
+        try{
+            inventoryService.delete(id);
+        }catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
 }
