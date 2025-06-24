@@ -14,5 +14,8 @@ public interface InventoryDAO {
 
     boolean checkExist(int id);
 
-    void delete(int id);
+    void delete(StockEntity stock);
+
+    void update(StockEntity stock);
+
 }

@@ -20,12 +20,10 @@ public class InventoryServiceImpl implements InventoryService{
         this.inventoryDAO = inventoryDAO;
     }
 
-
     @Override
     public boolean checkExist(int id) {
         return inventoryDAO.checkExist(id);
     }
-
 
     @Transactional
     @Override
@@ -38,7 +36,6 @@ public class InventoryServiceImpl implements InventoryService{
         }
     }
 
-
     @Override
     public StockEntity getByID(@RequestParam int id) {
         if(inventoryDAO.checkExist(id)) {
@@ -49,7 +46,6 @@ public class InventoryServiceImpl implements InventoryService{
         }
     }
 
-
     @Override
     public List<StockEntity> getAll() {
         return inventoryDAO.getAll();
@@ -58,13 +54,23 @@ public class InventoryServiceImpl implements InventoryService{
 
     @Transactional
     @Override
-    public void delete(int id) {
-        if(inventoryDAO.checkExist(id)) {
-            inventoryDAO.delete(id);
+    public void delete(StockEntity stock) {
+        if(inventoryDAO.checkExist(stock.getId())) {
+            inventoryDAO.delete(stock);
         }else{
-            throw new IllegalArgumentException("Product with ID " + id + " does not exist.");
+            throw new IllegalArgumentException("Product with ID " + stock.getId() + " does not exist.");
         }
 
+    }
+
+    @Transactional
+    @Override
+    public void update(StockEntity stock) {
+        if(inventoryDAO.checkExist(stock.getId())) {
+            inventoryDAO.update(stock);
+        }else{
+            throw new IllegalArgumentException("Product with ID " + stock.getId() + " does not exist.");
+        }
     }
 
 }

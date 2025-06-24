@@ -65,7 +65,9 @@ public class DaoImpl implements InventoryDAO{
 
 
     @Override
-    public void delete(int id) {
+    public void delete(StockEntity stock) {
+        int id = stock.getId();
+
         if(checkExist(id)){
             entityManager.remove(entityManager.find(StockEntity.class , id));
 
@@ -73,6 +75,17 @@ public class DaoImpl implements InventoryDAO{
             throw new IllegalArgumentException("Product with ID " + id + " does not exist.");
 
         }
+    }
+
+    @Override
+    public void update(StockEntity stock) {
+        if(checkExist(stock.getId())){
+            entityManager.merge(stock);
+        }
+        else{
+            throw new IllegalArgumentException("Product with ID " + stock.getId() + " does not exist.");
+        }
+
     }
 
 }

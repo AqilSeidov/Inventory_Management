@@ -46,11 +46,22 @@ public class InventoryController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable int id){
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(@RequestBody StockEntity stock){
         try{
-            inventoryService.delete(id);
+            inventoryService.delete(stock);
         }catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<String> update(@RequestBody StockEntity stock){
+        try {
+            inventoryService.update(stock);
+        }catch (IllegalArgumentException e){
+
             return ResponseEntity.badRequest().body(e.getMessage());
         }
         return ResponseEntity.ok().build();
