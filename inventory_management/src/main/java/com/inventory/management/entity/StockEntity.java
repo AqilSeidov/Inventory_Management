@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 
+
 @Entity
 @Table(name = "management")
 public class StockEntity {
@@ -23,7 +24,7 @@ public class StockEntity {
     private int quantity;
 
     @Column(name = "price")
-    private int price;
+    private double price;
 
     @Column(name="category", nullable = false)
     private String category;
@@ -35,7 +36,7 @@ public class StockEntity {
     public StockEntity() {}
 
     //Constructor
-    public StockEntity(int id, String product, int quantity, int price, String category) {
+    public StockEntity(int id, String product, int quantity, double price, String category) {
         this.id = id;
         this.product = product;
         this.quantity = quantity;
@@ -70,11 +71,11 @@ public class StockEntity {
         this.quantity = quantity;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

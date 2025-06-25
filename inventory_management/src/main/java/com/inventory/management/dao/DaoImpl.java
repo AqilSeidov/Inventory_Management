@@ -92,7 +92,7 @@ public class DaoImpl implements InventoryDAO{
 
         TypedQuery<StockEntity> theQuery = entityManager.createQuery(
                 "FROM StockEntity s WHERE s.product LIKE :productName", StockEntity.class);
-        theQuery.setParameter("productName", productName);
+        theQuery.setParameter("productName", "%"+ productName + "%");
 
         List<StockEntity> result = theQuery.getResultList();
 
